@@ -1,6 +1,6 @@
 import express, { type Request, type Response } from 'express';
 import { Activity } from './models/activity';
-import { connectToDatabase } from './database';
+import { connectToDatabase } from './config/database';
 import { Leaderboard } from './models/leaderboard';
 import { Team } from './models/team';
 import { User } from './models/user';

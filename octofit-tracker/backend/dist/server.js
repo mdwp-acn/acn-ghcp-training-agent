@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.startServer = exports.getApiBaseUrl = exports.app = void 0;
 const express_1 = __importDefault(require("express"));
 const activity_1 = require("./models/activity");
-const database_1 = require("./database");
+const database_1 = require("./config/database");
 const leaderboard_1 = require("./models/leaderboard");
 const team_1 = require("./models/team");
 const user_1 = require("./models/user");
