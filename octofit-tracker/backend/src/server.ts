@@ -1,6 +1,6 @@
 import express, { type Request, type Response } from 'express';
-import mongoose from 'mongoose';
 import { Activity } from './models/activity';
+import { connectToDatabase } from './database';
 import { Leaderboard } from './models/leaderboard';
 import { Team } from './models/team';
 import { User } from './models/user';
@@ -79,7 +79,7 @@ app.post('/api/workouts/', async (req: Request, res: Response) => {
 
 const startServer = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/octofit_db');
+    await connectToDatabase();
     console.log('MongoDB connected');
   } catch (error) {
     console.error('MongoDB connection failed', error);
