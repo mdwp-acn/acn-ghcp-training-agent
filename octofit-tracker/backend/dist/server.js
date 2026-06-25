@@ -14,10 +14,24 @@ const workout_1 = require("./models/workout");
 const app = (0, express_1.default)();
 exports.app = app;
 const port = process.env.PORT ? Number(process.env.PORT) : 8000;
-const codespaceName = process.env.CODESPACE_NAME;
-const getApiBaseUrl = () => codespaceName ? `https://${codespaceName}-8000.app.github.dev` : 'http://localhost:8000';
+const getApiBaseUrl = () => {
+    const codespaceName = process.env.CODESPACE_NAME;
+    return codespaceName
+        ? `https://${codespaceName}-8000.app.github.dev`
+        : 'http://localhost:8000';
+};
 exports.getApiBaseUrl = getApiBaseUrl;
 app.use(express_1.default.json());
+app.use((_req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+    if (_req.method === 'OPTIONS') {
+        res.sendStatus(204);
+        return;
+    }
+    next();
+});
 app.get('/api/health', (_req, res) => {
     res.json({
         status: 'ok',

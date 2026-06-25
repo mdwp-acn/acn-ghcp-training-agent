@@ -1,4 +1,4 @@
-import express, { type Request, type Response } from 'express';
+import express, { type NextFunction, type Request, type Response } from 'express';
 import { Activity } from './models/activity';
 import { connectToDatabase } from './config/database';
 import { Leaderboard } from './models/leaderboard';
@@ -17,6 +17,19 @@ const getApiBaseUrl = () => {
 };
 
 app.use(express.json());
+
+app.use((_req: Request, res: Response, next: NextFunction) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+
+  if (_req.method === 'OPTIONS') {
+    res.sendStatus(204);
+    return;
+  }
+
+  next();
+});
 
 app.get('/api/health', (_req: Request, res: Response) => {
   res.json({
